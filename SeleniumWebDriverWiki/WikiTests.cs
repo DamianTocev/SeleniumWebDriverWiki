@@ -8,7 +8,7 @@ namespace SeleniumWebDriverWiki
     {
         IWebDriver driver;
 
-       public object? ExpectedConditions { get; private set; }
+        public object ExpectedConditions { get; private set; }
 
         [SetUp]
         public void Setup()
@@ -24,16 +24,14 @@ namespace SeleniumWebDriverWiki
         [TearDown]
         public void TearDown()
         {
-            driver.Dispose();
+            driver.Quit();
         }
 
         [Test]
         public void Test_Check_Title_Wiki()
         {
-            
             var pageTitle = driver.Title;
-            //Assert.That(pageTitle, Equals ("Wikipedia"));
-            Assert.That(pageTitle, Is.EqualTo("Wikipedia"));
+            Assert.That("Wikipedia", Is.EqualTo(pageTitle));
         }
 
         [Test]
@@ -51,14 +49,14 @@ namespace SeleniumWebDriverWiki
         {
             var searchFiled = driver.FindElement(By.Id("searchInput"));
             searchFiled.SendKeys("Pyramid" + Keys.Enter);
-
+                        
             //Thread.Sleep(10000);
 
             var pageTitle = driver.Title;
 
             //Assert
-            Assert.That(pageTitle, Is.EqualTo("Pyramid - Wikipedia"));
-        }
+            Assert.That("Pyramid - Wikipedia", Is.EqualTo(pageTitle));
+        }        
 
         [Test]
         public void Test_Search_For_Pyramid_Wikipedia()
@@ -69,9 +67,7 @@ namespace SeleniumWebDriverWiki
             driver.FindElement(By.CssSelector("input#searchInput")).SendKeys("Pyramid");
             driver.FindElement(By.CssSelector("input#searchInput")).SendKeys(Keys.Enter);
 
-            //Assert.AreEqual("https://en.wikipedia.org/wiki/Pyramid", driver.Url);
-            Assert.That(driver.Url, Is.EqualTo("https://en.wikipedia.org/wiki/Pyramid"));
-
+            Assert.AreEqual("https://en.wikipedia.org/wiki/Pyramid", driver.Url);
         }
 
         [Test]
@@ -84,7 +80,7 @@ namespace SeleniumWebDriverWiki
             var pageTitle = driver.Title;
 
             //Assert
-            Assert.That(pageTitle, Is.EqualTo("Pyramid - Wikipedia"));
+            Assert.That("Pyramid - Wikipedia", Is.EqualTo(pageTitle));
         }
 
         [Test]
@@ -95,7 +91,7 @@ namespace SeleniumWebDriverWiki
 
             string deutschLinkText = allStrongElements[5].Text;
 
-            Assert.That(deutschLinkText, Is.EqualTo("Deutsch"));
+            Assert.That("Deutsch", Is.EqualTo(deutschLinkText));
         }
 
         [Test]
@@ -110,7 +106,7 @@ namespace SeleniumWebDriverWiki
 
             var pageTitle = driver.Title;
 
-            Assert.That(pageTitle, Is.EqualTo("Wikipédia, l'encyclopédie libre"));
+            Assert.That("Wikipédia, l'encyclopédie libre", Is.EqualTo(pageTitle));
         }
 
         [Test]
@@ -126,7 +122,7 @@ namespace SeleniumWebDriverWiki
 
             var pageTitle = driver.Title;
 
-            Assert.That(pageTitle, Is.EqualTo("Wikipédia, l'encyclopédie libre"));
+            Assert.That("Wikipédia, l'encyclopédie libre", Is.EqualTo(pageTitle));
         }
 
         [Test]
@@ -139,7 +135,7 @@ namespace SeleniumWebDriverWiki
             english.Click();
             var pageTitle = driver.Title;
 
-            Assert.That(pageTitle, Is.EqualTo("Wikipedia, the free encyclopedia"));
+            Assert.That("Wikipedia, the free encyclopedia", Is.EqualTo(pageTitle));
 
             driver.FindElement(By.LinkText("English")).Click();
 
